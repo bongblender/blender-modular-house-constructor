@@ -1,6 +1,6 @@
 import bpy
 
-half_wall = "Larg"
+wall_type = "Larg"
 
 unit_length_given = 200
 unit_length = 0
@@ -153,13 +153,13 @@ def change_Drawing_Mode(trueFalse):
 
 
 def half_Steps(trueFalse):
-    global half_wall
+    global wall_type
     global unit_length
     if trueFalse == "True":
-        half_wall = "Small"
+        wall_type = "Small"
         unit_length = unit_length_given/2
     elif trueFalse == "False":
-        half_wall = "Larg"
+        wall_type = "Larg"
         unit_length = unit_length_given
         
 def set_objects(objects_name):
@@ -190,21 +190,21 @@ def s():
     if objects_Type == "multi":
         if pesting == True:
             if active_dir == "s":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["wall1small"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["wall1large"])
             elif active_dir == "e":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["corner1small_inverted"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["corner1large_inverted"])
             elif active_dir == "n":
                 pass
             elif active_dir == "w":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["corner4small"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["corner4large"])
         else:
             pass
@@ -225,19 +225,19 @@ def e():
     if objects_Type == "multi":
         if pesting == True:
             if active_dir == "s":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["corner1small"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["corner1large"])
             elif active_dir == "e":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["wall2small"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["wall2large"])
             elif active_dir == "n":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["corner2small_inverted"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["corner2large_inverted"])
             elif active_dir == "w":
                 pass
@@ -261,19 +261,19 @@ def n():
             if active_dir == "s":
                 pass
             elif active_dir == "e":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["corner2small"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["corner2large"])
             elif active_dir == "n":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["wall3small"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["wall3large"])
             elif active_dir == "w":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["corner3small_inverted"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["corner3large_inverted"])
         else:
             pass
@@ -293,21 +293,21 @@ def w():
     if objects_Type == "multi":
         if pesting == True:
             if active_dir == "s":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["corner4small_inverted"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["corner4large_inverted"])
             elif active_dir == "e":
                 pass
             elif active_dir == "n":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["corner3small"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["corner3large"])
             elif active_dir == "w":
-                if half_wall == "Small":
+                if wall_type == "Small":
                     duplicate_object_by_name(extracted_list["wall4small"])
-                elif half_wall == "Larg":
+                elif wall_type == "Larg":
                     duplicate_object_by_name(extracted_list["wall4large"])
         else:
             pass
@@ -576,3 +576,4 @@ def unregister():
 
 if __name__ == "__main__":
     register()
+    
