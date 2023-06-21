@@ -16,7 +16,35 @@ duplicated_objects_name = []
 material_name = "MaterialName"
 
 main_database = {
-    'roof': {'type': 'single', 'list':{"theObject": "roof123gf"}},
+    'roof': {'type': 'single', 'list':{"theObject": "roofPlane"}},
+    'roof1': {'type': 'single', 'list':{"theObject": "roofBox"}},
+    'roof2s': {'type': 'single', 'list':{"theObject": "roofBase"}},
+    'roof2': {'type': 'multi', 'list':{
+    "corner1small": "corner1small",
+    "corner2small": "corner2small",
+    "corner3small": "corner3small",
+    "corner4small": "corner4small",
+    "corner1large": "roofcon1",
+    "corner2large": "roofcon2",
+    "corner3large": "roofcon3",
+    "corner4large": "roofcon4",
+    "corner1small_inverted": "corner1small_inverted",
+    "corner2small_inverted": "corner2small_inverted",
+    "corner3small_inverted": "corner3small_inverted",
+    "corner4small_inverted": "corner4small_inverted",
+    "corner1large_inverted": "roofcon1_invert",
+    "corner2large_inverted": "roofcon2_invert",
+    "corner3large_inverted": "roofcon3_invert",
+    "corner4large_inverted": "roofcon4_invert",
+    "wall1small": "wall1small",
+    "wall2small": "wall2small",
+    "wall3small": "wall3small",
+    "wall4small": "wall4small",
+    "wall1large": "roofSide1",
+    "wall2large": "roofSide2",
+    "wall3large": "roofSide3",
+    "wall4large": "roofSide4"
+}},
     'wall': {'type': 'multi', 'list':{
     "corner1small": "corner1small",
     "corner2small": "corner2small",
@@ -42,6 +70,32 @@ main_database = {
     "wall2large": "wall2large",
     "wall3large": "wall3large",
     "wall4large": "wall4large"
+}},
+    'wall2': {'type': 'multi', 'list':{
+    "corner1small": "corner1small",
+    "corner2small": "corner2small",
+    "corner3small": "corner3small",
+    "corner4small": "corner4small",
+    "corner1large": "corner1large_wall2",
+    "corner2large": "corner2large_wall2",
+    "corner3large": "corner3large_wall2",
+    "corner4large": "corner4large_wall2",
+    "corner1small_inverted": "corner1small_inverted",
+    "corner2small_inverted": "corner2small_inverted",
+    "corner3small_inverted": "corner3small_inverted",
+    "corner4small_inverted": "corner4small_inverted",
+    "corner1large_inverted": "corner3large_wall2",
+    "corner2large_inverted": "corner4large_wall2",
+    "corner3large_inverted": "corner1large_wall2",
+    "corner4large_inverted": "corner2large_wall2",
+    "wall1small": "wall1small",
+    "wall2small": "wall2small",
+    "wall3small": "wall3small",
+    "wall4small": "wall4small",
+    "wall1large": "wall1large_wall2",
+    "wall2large": "wall2large_wall2",
+    "wall3large": "wall3large_wall2",
+    "wall4large": "wall4large_wall2"
 }}}
 
 
@@ -150,6 +204,21 @@ def change_Drawing_Mode(trueFalse):
     elif trueFalse == "False":
         pesting = False
     pass
+
+def reset_dir(dir_to_set_argument):
+    global active_dir
+    dir_to_set = str(dir_to_set_argument)
+    lowercase_text = dir_to_set.lower()
+    trimmed_text = lowercase_text.lstrip()
+    if trimmed_text == "w":
+        active_dir = "w"
+    elif trimmed_text == "n":
+        active_dir = "n"
+    elif trimmed_text == "e":
+        active_dir = "e"
+    elif trimmed_text == "s":
+        active_dir = "s"
+    duplicated_objects_name.clear()
 
 
 def half_Steps(trueFalse):
@@ -368,15 +437,15 @@ class MyAddOnPanel1(bpy.types.Panel):
         
         layout.label(text="Enter Objects Name / List:")
         layout.prop(context.scene, "my_text1", text="")
-
-        # Add the button
         layout.operator("object.print_text_operator", text="Set Object")
         
         layout.label(text="Enter Custom Steps:")
         layout.prop(context.scene, "my_text2", text="")
-
-        # Add the button
         layout.operator("object.print_text_operator2", text="Set Steps")
+        
+        layout.label(text="Reset Dir:")
+        layout.prop(context.scene, "my_text4", text="")
+        layout.operator("object.print_text_operator4", text="reset")
         
         # Add other UI elements here
         layout.label(text="Draw BUilding")
@@ -403,8 +472,6 @@ class MyAddOnPanel1(bpy.types.Panel):
         
         layout.label(text="Set Material:")
         layout.prop(context.scene, "my_text3", text="")
-
-        # Add the button
         layout.operator("object.print_text_operator3", text="Apply Material")
         
         
@@ -532,7 +599,7 @@ class textAssignOperator2(bpy.types.Operator):
         global unit_length_given
         scene = context.scene
         print("Text 1:", scene.my_text2)
-        unit_length_given = int(scene.my_text2)
+        unit_length_given = float(scene.my_text2)
         return {'FINISHED'}
     
 class textAssignOperator3(bpy.types.Operator):
@@ -548,10 +615,24 @@ class textAssignOperator3(bpy.types.Operator):
         print("Text 1:", scene.my_text3)
         assignMaterial_to_Selected(str(scene.my_text3))
         return {'FINISHED'}
+    
+class textAssignOperator4(bpy.types.Operator):
+    global unit_length_given
+    """
+    Operator to print the entered text.
+    """
+    bl_idname = "object.print_text_operator4"
+    bl_label = "Print Text"
+    def execute(self, context):
+        global unit_length_given
+        scene = context.scene
+        reset_dir(scene.my_text4)
+        print("Text 1:", scene.my_text4)
+        return {'FINISHED'}
 
 
 
-classes = (MyAddOnPanel1, MyOperator1, MyOperator2, MyOperator3, MyOperator4, MyOperator5, MyOperator6, MyOperator7, MyTickButton1, textAssignOperator, textAssignOperator2, textAssignOperator3)
+classes = (MyAddOnPanel1, MyOperator1, MyOperator2, MyOperator3, MyOperator4, MyOperator5, MyOperator6, MyOperator7, MyTickButton1, textAssignOperator, textAssignOperator2, textAssignOperator3, textAssignOperator4)
 
 
 def register():
@@ -560,6 +641,7 @@ def register():
     bpy.types.Scene.my_text1 = bpy.props.StringProperty()
     bpy.types.Scene.my_text2 = bpy.props.StringProperty()
     bpy.types.Scene.my_text3 = bpy.props.StringProperty()
+    bpy.types.Scene.my_text4 = bpy.props.StringProperty()
     bpy.types.Scene.pesting_property = bpy.props.BoolProperty(default=True)
     bpy.types.Scene.half_step_property = bpy.props.BoolProperty(default=False)
      
@@ -570,10 +652,10 @@ def unregister():
     del bpy.types.Scene.my_text1
     del bpy.types.Scene.my_text2
     del bpy.types.Scene.my_text3
+    del bpy.types.Scene.my_text4
     del bpy.types.Scene.pesting_property
     del bpy.types.Scene.half_step_property
 
 
 if __name__ == "__main__":
     register()
-    
